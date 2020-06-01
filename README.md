@@ -1,3 +1,3 @@
 # shellscripts
 
-trying to learn shell scripting with realword use examples
+repository for learning shell scripting with basic, pragmatic examples

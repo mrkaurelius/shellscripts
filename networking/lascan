@@ -1,0 +1,9 @@
+#!/bin/bash
+# basic arp-scan wrapper
+
+# TODO:
+# make usable 
+
+# getting default iterface
+INTERFACE=$(ip -o -4 route show to default | awk '{print $5}')
+sudo arp-scan --localnet --interface=$INTERFACE
