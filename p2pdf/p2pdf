@@ -1,0 +1,37 @@
+#!/bin/bash
+
+# this program tries to convert  prensentation files to pdf with libreoffice
+# if files sortable by names 
+
+# TODO positional arguments for file types
+# merge files with order
+
+usage (){
+  echo "this func should print how this script will be used" 
+}
+
+check_dependencies() {
+for DEPENDENCY in $1
+  do
+    command -v $DEPENDENCY >/dev/null 2>&1 || 
+      { echo >&2 "I require ${DEPENDENCY} but it's not installed.  Aborting."; exit 1; }
+  done
+}
+
+while [[ "$#" > 0 ]]; do case $1 in
+  -d|--directory) TARGET_DIR="$2"; cd $TARGET_DIR; shift;shift;;
+  # -s|--section-id) SECTION_ID="$2";shift;shift;;
+  -m|--merge) MERGE=1;shift;;
+  -s|--sort) SORT=1;shift;;
+  *) echo "Unknown parameter passed: $1 exiting"; usage; exit 1; shift;;
+esac; done
+
+check_dependencies "bash libreoffice gs"
+
+# ugly way of filetypes
+find . -regextype sed -regex ".*.\(ppt\|pptx\)" -exec libreoffice --headless  --convert-to pdf {} \;
+
+if [ "$MERGE" = 1 ] ; then
+  echo "Files merging"
+  gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -sOutputFile=merged_output.pdf *.pdf
+fi

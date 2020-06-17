@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# hedious script dont use it
+
+# TODO:
+# print newline file havent any trailing new line
+# implement argument parsing mechanism
+# make recursive
+# dynamic mergedfile name
+
 echo -n 'file extention: '
 read FILE_EXTENTION
 MERGED_FILE='merged.txt'
@@ -15,8 +23,3 @@ for FILENAME in $FILES
     cat $FILENAME >> $MERGED_FILE
     printf '%s %-25s   END %s\n\n' $NS $FILENAME $NS >> $MERGED_FILE
   done
-
-
-#TODO: 
-# implement parameters
-# make recursive
